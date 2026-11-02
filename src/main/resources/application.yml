@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: santadao
+  config:
+    # DB 계정(DB_USERNAME, DB_PASSWORD)을 담은 로컬 전용 파일. 없으면 무시되고 환경변수를 사용한다.
+    import: optional:file:./application-secret.yml
+  profiles:
+    default: local
+  # 공통 DB 설정. 환경별 파일에는 접속 URL과 ddl-auto만 둔다.
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      connection-test-query: SELECT 1
+      data-source-properties:
+        rewriteBatchedStatements: true
+  jackson:
+    datatype:
+      enum:
+        # Jackson 3 기본값(true)은 HttpStatus를 "201 CREATED"로 직렬화 → "CREATED"(name)로 맞춘다
+        write-enums-using-to-string: false
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

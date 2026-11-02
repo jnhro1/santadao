@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/santadao-test?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+  flyway:
+    clean-disabled: false   # 테스트 DB는 매 실행마다 비우고 마이그레이션부터 다시 적용 (TestFlywayConfig)
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  test:
+    database:
+      replace: none   # @DataJpaTest가 임베디드 DB로 바꾸지 않고 santadao-test 스키마를 그대로 사용
