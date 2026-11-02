@@ -1,0 +1,26 @@
+# 로컬 개발·테스트용 Postgres (운영은 Supabase)
+# 사용: docker compose up -d
+# 계정은 .env(gitignore)에서 읽습니다. .env.example을 복사해서 만드세요.
+services:
+  postgres:
+    image: postgres:17
+    container_name: santadao-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?.env에 POSTGRES_USER를 지정하세요}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?.env에 POSTGRES_PASSWORD를 지정하세요}
+      TZ: UTC
+    ports:
+      - "5432:5432"
+    volumes:
+      - santadao-postgres-data:/var/lib/postgresql/data
+      # 컨테이너 최초 기동 시 santadao_local, santadao_test database 생성
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  santadao-postgres-data:

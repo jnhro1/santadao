@@ -45,3 +45,6 @@ out/
 
 # Local DB credentials
 application-secret.yml
+
+# docker-compose local credentials
+.env

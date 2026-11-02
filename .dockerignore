@@ -1,0 +1,12 @@
+.git
+.gradle
+build
+.idea
+.claude
+docs
+*.md
+.env
+.env.*
+application-secret.yml
+docker-compose.yml
+docker

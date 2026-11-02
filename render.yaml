@@ -1,0 +1,21 @@
+# Render Blueprint: 대시보드 > New > Blueprint 에서 이 저장소를 연결하면 서비스가 생성됩니다.
+# DB 접속 정보(sync: false)는 git에 넣지 않고 Render 대시보드에서 입력합니다. (docs/deploy.md)
+services:
+  - type: web
+    name: santadao
+    runtime: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
