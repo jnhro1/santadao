@@ -104,7 +104,7 @@ public class EventService {
         return value.trim();
     }
 
-    /** 이벤트 안에서 겹치지 않는 PIN을 이름 순서대로 발급한다. */
+    /** 이벤트 안에서 겹치지 않는 비밀 코드를 이름 순서대로 발급한다. */
     private Map<String, String> issuePins(List<String> names) {
         Map<String, String> pinsByName = new LinkedHashMap<>();
         Set<String> issuedPins = new HashSet<>();

@@ -4,7 +4,7 @@ import com.jnhro1.santadao.event.entity.Event;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/** 관리 링크 응답: 이름별 PIN. 추첨 결과는 포함하지 않는다. */
+/** 관리 링크 응답: 이름별 비밀 코드. 추첨 결과는 포함하지 않는다. */
 public record AdminEventResponse(
         String name,
         String publicCode,

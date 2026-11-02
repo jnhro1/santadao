@@ -8,7 +8,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * 로그인 없는 서비스: 참가자 확인은 이벤트 코드 + PIN으로 서비스 계층에서 검증한다.
+ * 로그인 없는 서비스: 참가자 확인은 이벤트 코드 + 비밀 코드로 서비스 계층에서 검증한다.
  */
 @Configuration
 public class SecurityConfig {

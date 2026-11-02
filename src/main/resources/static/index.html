@@ -10,7 +10,7 @@
 <meta property="og:site_name" content="산타다오">
 <meta property="og:url" content="https://santadao.onrender.com/">
 <meta property="og:title" content="크리스마스 마니또 뽑기">
-<meta property="og:description" content="이름만 적으면 바로 추첨! 로그인 없이 각자 PIN으로 몰래 확인해요.">
+<meta property="og:description" content="이름만 적으면 바로 추첨! 로그인 없이 각자 비밀 코드로 몰래 확인해요.">
 <meta property="og:image" content="https://santadao.onrender.com/images/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -41,7 +41,7 @@
     <div class="hero-text">
       <p class="eyebrow" id="eyebrow">연말 마니또</p>
       <h1 class="title-xl">두근 두근<br>나의 마니또는?</h1>
-      <p class="lead">이름만 적으면 바로 추첨!<br>각자 PIN으로 몰래 확인해요.</p>
+      <p class="lead">이름만 적으면 바로 추첨!<br>각자 비밀 코드로 몰래 확인해요.</p>
     </div>
     <svg class="bob" width="112" height="112" viewBox="0 0 132 132" aria-hidden="true">
       <rect x="18" y="58" width="96" height="66" rx="10" fill="#1E4B3B"/>
@@ -112,8 +112,8 @@
     <h2 class="steps-title">이렇게 진행돼요</h2>
     <ol class="steps">
       <li><span class="step-num">1</span>이름을 적고 만들면 즉시 추첨</li>
-      <li><span class="step-num">2</span>링크는 단톡방에, PIN은 개인 메시지로</li>
-      <li><span class="step-num">3</span>각자 이름 + PIN으로 몰래 확인</li>
+      <li><span class="step-num">2</span>링크는 단톡방에, 비밀 코드는 개인 메시지로</li>
+      <li><span class="step-num">3</span>각자 이름 + 비밀 코드로 몰래 확인</li>
     </ol>
   </section>
 </div>
@@ -159,7 +159,7 @@
   var DRAW_MESSAGES = [
     '산타가 명단을 섞고 있어요',
     '루돌프가 쪽지를 나르는 중이에요',
-    '선물 상자에 PIN을 포장하고 있어요',
+    '선물 상자에 비밀 코드를 포장하고 있어요',
     '거의 다 됐어요! 두근두근'
   ];
   var DRAW_MIN_MS = 1500; // 응답이 빨라도 애니메이션이 깜빡이지 않도록 최소 표시 시간
@@ -294,7 +294,7 @@
         sessionStorage.setItem('santadao:created', JSON.stringify(created));
         location.href = '/created.html';
       } catch (err) {
-        // 브라우저 저장소를 못 쓰면 관리 화면으로 바로 이동 (PIN 목록 확인 가능)
+        // 브라우저 저장소를 못 쓰면 관리 화면으로 바로 이동 (비밀 코드 목록 확인 가능)
         location.href = '/admin/' + encodeURIComponent(created.adminToken);
       }
     }).catch(function (err) {

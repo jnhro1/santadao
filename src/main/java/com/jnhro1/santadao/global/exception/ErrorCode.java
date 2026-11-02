@@ -21,7 +21,7 @@ public enum ErrorCode {
 
     // Participant
     PARTICIPANT_NOT_FOUND(HttpStatus.NOT_FOUND, "참가자를 찾을 수 없어요."),
-    INVALID_PIN(HttpStatus.UNAUTHORIZED, "PIN이 맞지 않아요. 다시 입력해 주세요.");
+    INVALID_PIN(HttpStatus.UNAUTHORIZED, "비밀 코드가 맞지 않아요. 다시 입력해 주세요.");
 
     /** 응답 HTTP 상태 (ApiResponse의 code/status로 그대로 쓰인다) */
     private final HttpStatus code;

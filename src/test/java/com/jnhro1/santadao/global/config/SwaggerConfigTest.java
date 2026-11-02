@@ -32,7 +32,7 @@ class SwaggerConfigTest {
                 .isEqualTo(Map.of(
                         "code", 401,
                         "status", "UNAUTHORIZED",
-                        "message", "PIN이 맞지 않아요. 다시 입력해 주세요."));
+                        "message", "비밀 코드가 맞지 않아요. 다시 입력해 주세요."));
         // 같은 상태(404)의 예시는 덮어쓰지 않고 함께 들어간다
         assertThat(result).bodyJson()
                 .hasPath(REVEAL_RESPONSES + "['404'].content['application/json'].examples.EVENT_NOT_FOUND")

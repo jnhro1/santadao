@@ -9,8 +9,8 @@ public record RevealRequest(
 
         String name,
 
-        @NotBlank(message = "PIN을 입력해 주세요")
-        @Pattern(regexp = "\\d{4}", message = "PIN은 숫자 4자리예요")
+        @NotBlank(message = "비밀 코드를 입력해 주세요")
+        @Pattern(regexp = "\\d{4}", message = "비밀 코드는 숫자 4자리예요")
         String pin
 ) {
 }

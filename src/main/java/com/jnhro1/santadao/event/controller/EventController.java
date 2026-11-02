@@ -30,7 +30,7 @@ public class EventController {
 
     private final EventService eventService;
 
-    @Operation(summary = "이벤트 생성 및 추첨", description = "이벤트를 만들고 즉시 추첨합니다. 공용 코드, 관리 토큰, 이름별 PIN을 반환합니다.")
+    @Operation(summary = "이벤트 생성 및 추첨", description = "이벤트를 만들고 즉시 추첨합니다. 공용 코드, 관리 토큰, 이름별 비밀 코드를 반환합니다.")
     @ApiErrorCodeExample({
             ErrorCode.INVALID_INPUT,
             ErrorCode.DUPLICATE_PARTICIPANT_NAME,
@@ -44,14 +44,14 @@ public class EventController {
                 .body(ApiResponse.of(HttpStatus.CREATED, eventService.createEvent(request)));
     }
 
-    @Operation(summary = "공용 이벤트 조회", description = "이벤트 이름, 메모, 참가자 이름 목록을 반환합니다. PIN과 결과는 포함하지 않습니다.")
+    @Operation(summary = "공용 이벤트 조회", description = "이벤트 이름, 메모, 참가자 이름 목록을 반환합니다. 비밀 코드와 결과는 포함하지 않습니다.")
     @ApiErrorCodeExample(ErrorCode.EVENT_NOT_FOUND)
     @GetMapping("/{publicCode}")
     public ApiResponse<EventPublicResponse> getPublicEvent(@PathVariable String publicCode) {
         return ApiResponse.ok(eventService.getPublicEvent(publicCode));
     }
 
-    @Operation(summary = "내 마니또 확인", description = "참가자와 PIN이 일치하면 마니또 이름을 반환합니다.")
+    @Operation(summary = "내 마니또 확인", description = "참가자와 비밀 코드가 일치하면 마니또 이름을 반환합니다.")
     @ApiErrorCodeExample({
             ErrorCode.INVALID_INPUT,
             ErrorCode.INVALID_PIN,

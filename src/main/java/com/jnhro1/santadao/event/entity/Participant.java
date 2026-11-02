@@ -36,7 +36,7 @@ public class Participant extends BaseEntity {
     @Column(nullable = false, length = NAME_MAX_LENGTH, comment = "참가자 이름")
     private String name;
 
-    @Column(nullable = false, length = PIN_LENGTH, comment = "결과 확인용 PIN (숫자 4자리)")
+    @Column(nullable = false, length = PIN_LENGTH, comment = "결과 확인용 비밀 코드 (숫자 4자리)")
     private String pin;
 
     /** 이 참가자가 선물할 상대. 참가자 저장 후 추첨 단계에서 배정된다. */

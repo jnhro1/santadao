@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>산타다오 · 내 마니또 확인하기</title>
-<meta name="description" content="이름을 고르고 PIN을 입력하면 내 마니또를 몰래 확인할 수 있어요">
+<meta name="description" content="이름을 고르고 비밀 코드를 입력하면 내 마니또를 몰래 확인할 수 있어요">
 <!-- 카카오톡 등 링크 미리보기 (Open Graph). 공용 링크(/e/...)마다 주소가 달라 og:url은 생략 -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="산타다오">
 <meta property="og:title" content="내 마니또 확인하기">
-<meta property="og:description" content="이름을 고르고 PIN을 입력하면 내 마니또를 몰래 확인할 수 있어요.">
+<meta property="og:description" content="이름을 고르고 비밀 코드를 입력하면 내 마니또를 몰래 확인할 수 있어요.">
 <meta property="og:image" content="https://santadao.onrender.com/images/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -69,7 +69,7 @@
       </div>
     </section>
 
-    <!-- 이름 선택 + PIN 입력 -->
+    <!-- 이름 선택 + 비밀 코드 입력 -->
     <form class="card" id="revealForm" novalidate>
       <fieldset>
         <legend class="step-label"><span class="num-badge">1</span>나는 누구일까요?</legend>
@@ -77,13 +77,13 @@
       </fieldset>
 
       <div class="field-group" style="gap:12px">
-        <label class="step-label" for="pin"><span class="num-badge">2</span>주최자에게 받은 PIN</label>
+        <label class="step-label" for="pin"><span class="num-badge">2</span>주최자에게 받은 비밀 코드</label>
         <input class="pin-input" id="pin" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="4" placeholder="••••">
         <p class="msg-error center" id="pinErr" role="alert" hidden>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 17h.01"/></svg>
           <span></span>
         </p>
-        <p class="hint" id="pinHint">PIN을 잊었다면 주최자에게 다시 물어보세요</p>
+        <p class="hint" id="pinHint">비밀 코드를 잊었다면 주최자에게 다시 물어보세요</p>
       </div>
 
       <button class="btn btn-pine" type="submit" id="revealBtn" disabled>
@@ -110,7 +110,7 @@
         <span class="reveal-name" id="targetName"></span>
         <svg width="22" height="22" viewBox="0 0 24 24" fill="#E8B04B" aria-hidden="true"><path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
       </div>
-      <p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:#5A463B">들키지 않게 몰래 준비해 주세요!<br>이름과 PIN으로 언제든 다시 확인할 수 있어요.</p>
+      <p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:#5A463B">들키지 않게 몰래 준비해 주세요!<br>이름과 비밀 코드로 언제든 다시 확인할 수 있어요.</p>
       <button class="btn btn-outline" type="button" id="backBtn" style="margin-top:8px">처음으로</button>
     </section>
   </div>
@@ -216,7 +216,7 @@
       $('pin').value = '';
       if (err.status === 404 && !picked) { show('notfound'); return; }
       var msg = (err.status >= 400 && err.status < 500)
-        ? 'PIN이 맞지 않아요. 다시 입력해 주세요'
+        ? '비밀 코드가 맞지 않아요. 다시 입력해 주세요'
         : '확인하지 못했어요. 잠시 후 다시 시도해 주세요';
       setPinError(msg);
       Santa.restartAnim($('pin'), 'shake');

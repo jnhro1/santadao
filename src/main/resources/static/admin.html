@@ -45,18 +45,18 @@
   <div class="stack" id="mainView" hidden>
     <p class="notice-dashed white" style="margin:0 16px">
       <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E4B3B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.9 17.9A10 10 0 0 1 2 12s3.5-7 10-7a9.7 9.7 0 0 1 5.9 2M22 12s-1 2-3 4M3 3l18 18"/></svg>
-      <span>여기에는 <b>PIN만</b> 있어요. 누가 누구의 마니또인지는 주최자도 볼 수 없어요. PIN을 잊은 친구에게 다시 알려 주세요.</span>
+      <span>여기에는 <b>비밀 코드만</b> 있어요. 누가 누구의 마니또인지는 주최자도 볼 수 없어요. 비밀 코드를 잊은 친구에게 다시 알려 주세요.</span>
     </p>
 
     <section class="card on-cream">
       <div style="display:flex;align-items:center;justify-content:space-between">
-        <h2 class="card-title" style="font-size:20px">참가자별 PIN</h2>
+        <h2 class="card-title" style="font-size:20px">참가자별 비밀 코드</h2>
         <span class="card-sub" id="countText"></span>
       </div>
       <ul class="pin-list" id="pinList"></ul>
       <button class="btn btn-pine btn-md" type="button" id="copyAll" style="margin-top:4px;font-size:17px">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B04B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
-        PIN 목록 전체 복사
+        비밀 코드 목록 전체 복사
       </button>
     </section>
 
@@ -135,11 +135,11 @@
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'icon-btn';
-      btn.setAttribute('aria-label', p.name + ' PIN 복사');
+      btn.setAttribute('aria-label', p.name + ' 비밀 코드 복사');
       btn.innerHTML = COPY_SVG;
       btn.addEventListener('click', function () {
         Santa.copyText(String(p.pin)).then(function () {
-          Santa.toast(p.name + '의 PIN을 복사했어요');
+          Santa.toast(p.name + '의 비밀 코드를 복사했어요');
           btn.innerHTML = CHECK_SVG;
           setTimeout(function () { btn.innerHTML = COPY_SVG; }, 1500);
         }, function () { Santa.toast('복사하지 못했어요'); });
@@ -153,8 +153,8 @@
     });
 
     $('copyAll').addEventListener('click', function () {
-      var text = '[' + name + '] 마니또 PIN 목록\n' + people.map(function (p) { return p.name + ': ' + p.pin; }).join('\n');
-      Santa.copyWithToast(text, 'PIN 목록을 복사했어요');
+      var text = '[' + name + '] 마니또 비밀 코드 목록\n' + people.map(function (p) { return p.name + ': ' + p.pin; }).join('\n');
+      Santa.copyWithToast(text, '비밀 코드 목록을 복사했어요');
     });
 
     if (publicCode) {

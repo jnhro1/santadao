@@ -21,7 +21,7 @@ public class AdminEventController {
 
     private final EventService eventService;
 
-    @Operation(summary = "관리 정보 조회", description = "이름별 PIN 목록을 반환합니다. 추첨 결과는 포함하지 않습니다.")
+    @Operation(summary = "관리 정보 조회", description = "이름별 비밀 코드 목록을 반환합니다. 추첨 결과는 포함하지 않습니다.")
     @ApiErrorCodeExample(ErrorCode.EVENT_NOT_FOUND)
     @GetMapping("/{adminToken}")
     public ApiResponse<AdminEventResponse> getAdminEvent(@PathVariable String adminToken) {

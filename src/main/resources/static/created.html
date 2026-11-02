@@ -26,7 +26,7 @@
   <!-- 생성 정보 없음 (새로고침/직접 접속) -->
   <section class="card on-green" id="emptyView" hidden style="margin-top:40px;align-items:center;text-align:center;gap:14px">
     <h1 class="card-title" style="font-size:24px">생성 정보가 없어요</h1>
-    <p style="margin:0;font-size:15px;line-height:1.6;color:#5A463B">이 화면은 이벤트를 만든 직후에만 볼 수 있어요.<br>PIN은 관리 링크에서 다시 볼 수 있어요.</p>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#5A463B">이 화면은 이벤트를 만든 직후에만 볼 수 있어요.<br>비밀 코드는 관리 링크에서 다시 볼 수 있어요.</p>
     <a class="btn btn-pine btn-md" href="/">새 마니또 만들기</a>
   </section>
 
@@ -64,7 +64,7 @@
         <span class="card-icon pine">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B04B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3M16 7l3 3M18 5l2 2"/></svg>
         </span>
-        <div><h2 class="card-title">관리 링크</h2><span class="card-sub">나만 보관하세요 · PIN을 다시 볼 수 있어요</span></div>
+        <div><h2 class="card-title">관리 링크</h2><span class="card-sub">나만 보관하세요 · 비밀 코드를 다시 볼 수 있어요</span></div>
       </div>
       <div class="link-row">
         <code class="link-box" id="adminUrl"></code>
@@ -72,7 +72,7 @@
       </div>
       <p class="notice-warn">
         <svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2L12 3zM12 10v5M12 18h.01"/></svg>
-        이 링크가 퍼지면 모든 PIN이 보여요. 단톡방에는 올리지 마세요.
+        이 링크가 퍼지면 모든 비밀 코드가 보여요. 단톡방에는 올리지 마세요.
       </p>
     </section>
 
@@ -81,12 +81,12 @@
         <span class="card-icon gold">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B2A10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
         </span>
-        <div><h2 class="card-title">참가자별 PIN</h2><span class="card-sub">각자에게 개인 메시지로 보내 주세요</span></div>
+        <div><h2 class="card-title">참가자별 비밀 코드</h2><span class="card-sub">각자에게 개인 메시지로 보내 주세요</span></div>
       </div>
       <ul class="pin-list" id="pinList"></ul>
       <button class="btn btn-outline" type="button" id="copyAll">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
-        PIN 목록 전체 복사
+        비밀 코드 목록 전체 복사
       </button>
     </section>
 
@@ -139,7 +139,7 @@
 
   // 개인 메시지로 보내기 좋은 문구
   function personalMessage(p) {
-    return '[' + data.eventName + '] ' + p.name + '님의 마니또 PIN은 ' + p.pin + ' 이에요.\n' + publicUrl + ' 에서 이름을 고르고 PIN을 입력하세요!';
+    return '[' + data.eventName + '] ' + p.name + '님의 마니또 비밀 코드는 ' + p.pin + ' 이에요.\n' + publicUrl + ' 에서 이름을 고르고 비밀 코드를 입력하세요!';
   }
 
   var list = $('pinList');
@@ -155,7 +155,7 @@
     right.className = 'pin-right';
     var tiles = document.createElement('span');
     tiles.className = 'pin-tiles';
-    tiles.setAttribute('aria-label', p.name + ' PIN ' + String(p.pin).split('').join(' '));
+    tiles.setAttribute('aria-label', p.name + ' 비밀 코드 ' + String(p.pin).split('').join(' '));
     String(p.pin).split('').forEach(function (d) {
       var t = document.createElement('span');
       t.className = 'pin-tile';
@@ -185,9 +185,9 @@
   });
 
   $('copyAll').addEventListener('click', function () {
-    var text = '[' + data.eventName + '] 마니또 PIN 목록\n' +
+    var text = '[' + data.eventName + '] 마니또 비밀 코드 목록\n' +
       people.map(function (p) { return p.name + ': ' + p.pin; }).join('\n');
-    Santa.copyWithToast(text, 'PIN 목록을 복사했어요');
+    Santa.copyWithToast(text, '비밀 코드 목록을 복사했어요');
   });
 })();
 </script>
