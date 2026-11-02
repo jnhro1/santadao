@@ -261,6 +261,84 @@ legend { padding: 0; margin-bottom: 12px; }
 .fall.d3 { animation-delay: -4s; }
 @keyframes fall { from { transform: translateY(-20px); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } to { transform: translateY(120px); opacity: 0; } }
 
+/* 추첨 대기 오버레이 (index.html) */
+.no-scroll { overflow: hidden; }
+.draw-overlay {
+  position: fixed; inset: 0; z-index: 20;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: 24px;
+  /* 메인 화면과 같은 빨강 배경 + 중앙 빛: 초록 선물 상자가 또렷하게 보이도록 */
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 248, 238, .28) 0, rgba(255, 248, 238, 0) 190px),
+    rgba(150, 30, 37, .96);
+  color: var(--cream);
+  text-align: center;
+  animation: draw-fade .25s ease both;
+}
+.draw-overlay[hidden] { display: none !important; }
+@keyframes draw-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.draw-stage { position: relative; width: 190px; height: 170px; display: flex; align-items: flex-end; justify-content: center; }
+.draw-gift { overflow: visible; }
+.draw-box { transform-origin: 66px 124px; animation: draw-wiggle .9s ease-in-out infinite; }
+.draw-lid { transform-origin: 66px 64px; animation: draw-lid .9s ease-in-out infinite; }
+@keyframes draw-wiggle {
+  0%, 100% { transform: rotate(0) scale(1, 1); }
+  15% { transform: rotate(-5deg) scale(1.03, .97); }
+  30% { transform: rotate(5deg) scale(.98, 1.02); }
+  45% { transform: rotate(-3deg); }
+  60% { transform: rotate(0) scale(1.04, .96); }
+}
+@keyframes draw-lid {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  20% { transform: translateY(-14px) rotate(-8deg); }
+  35% { transform: translateY(-4px) rotate(4deg); }
+  55% { transform: translateY(-18px) rotate(6deg); }
+  70% { transform: translateY(0) rotate(0); }
+}
+
+/* 상자에서 튀어나오는 반짝이 */
+.draw-sparkles span {
+  position: absolute; left: 50%; top: 52%;
+  width: 10px; height: 10px; margin: -5px;
+  background: var(--gold);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  opacity: 0;
+  animation: draw-spark 1.8s ease-out infinite;
+}
+.draw-sparkles span:nth-child(2n) { background: var(--cream); width: 7px; height: 7px; }
+.draw-sparkles span:nth-child(1) { --dx: -78px; --dy: -70px; animation-delay: 0s; }
+.draw-sparkles span:nth-child(2) { --dx: 74px;  --dy: -82px; animation-delay: .3s; }
+.draw-sparkles span:nth-child(3) { --dx: -92px; --dy: -18px; animation-delay: .6s; }
+.draw-sparkles span:nth-child(4) { --dx: 90px;  --dy: -26px; animation-delay: .9s; }
+.draw-sparkles span:nth-child(5) { --dx: -30px; --dy: -100px; animation-delay: 1.2s; }
+.draw-sparkles span:nth-child(6) { --dx: 34px;  --dy: -96px; animation-delay: 1.5s; }
+@keyframes draw-spark {
+  0% { transform: translate(0, 0) scale(.3) rotate(0); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(1.1) rotate(180deg); opacity: 0; }
+}
+
+/* 이름 룰렛 */
+.draw-roulette {
+  min-width: 160px; padding: 10px 22px;
+  border-radius: 999px;
+  background: var(--cream); color: var(--red);
+  font-family: var(--display); font-size: 26px; line-height: 1.2;
+  box-shadow: 0 5px 0 var(--gold-dark);
+}
+.draw-tick { animation: draw-tick .11s ease-out; }
+@keyframes draw-tick { from { transform: translateY(-40%); opacity: .2; } to { transform: none; opacity: 1; } }
+
+.draw-message { margin: 0; font-family: var(--display); font-size: 19px; min-height: 1.4em; }
+.rise-quick { animation: rise .45s cubic-bezier(.3,1.4,.5,1) both; }
+
+.draw-dots { display: flex; gap: 8px; }
+.draw-dots span { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: draw-dot 1s ease-in-out infinite; }
+.draw-dots span:nth-child(2) { animation-delay: .15s; }
+.draw-dots span:nth-child(3) { animation-delay: .3s; }
+@keyframes draw-dot { 0%, 100% { transform: translateY(0); opacity: .4; } 50% { transform: translateY(-8px); opacity: 1; } }
+
 /* 배경 눈: 모든 화면 위로 작은 흰 눈이 내린다 (클릭 방해 없음) */
 body::before,
 body::after {

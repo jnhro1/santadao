@@ -108,6 +108,33 @@
   </section>
 </div>
 
+<!-- 추첨 대기 오버레이 -->
+<div class="draw-overlay" id="drawOverlay" role="status" aria-live="polite" hidden>
+  <div class="draw-stage">
+    <div class="draw-sparkles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <svg class="draw-gift" width="150" height="150" viewBox="0 0 132 132" aria-hidden="true">
+      <g class="draw-box">
+        <rect x="18" y="58" width="96" height="66" rx="10" fill="#1E4B3B"/>
+        <circle cx="36" cy="80" r="3" fill="#FFF8EE" opacity=".7"/><circle cx="96" cy="100" r="3" fill="#FFF8EE" opacity=".7"/>
+        <circle cx="40" cy="108" r="2.5" fill="#FFF8EE" opacity=".7"/><circle cx="94" cy="74" r="2.5" fill="#FFF8EE" opacity=".7"/>
+        <rect x="58" y="58" width="16" height="66" fill="#E8B04B"/>
+      </g>
+      <g class="draw-lid">
+        <rect x="12" y="42" width="108" height="22" rx="7" fill="#2E6B53"/>
+        <rect x="58" y="42" width="16" height="22" fill="#E8B04B"/>
+        <path d="M66 42 C50 18 28 22 38 36 C43 43 56 43 66 42 Z" fill="#E8B04B"/>
+        <path d="M66 42 C82 18 104 22 94 36 C89 43 76 43 66 42 Z" fill="#E8B04B"/>
+        <circle cx="66" cy="42" r="7" fill="#C98F27"/>
+      </g>
+    </svg>
+  </div>
+  <div class="draw-roulette" aria-hidden="true"><span id="drawName">?</span></div>
+  <p class="draw-message" id="drawMessage">산타가 명단을 섞고 있어요</p>
+  <div class="draw-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+</div>
+
 <script src="/js/common.js"></script>
 <script>
 (function () {
@@ -117,6 +144,47 @@
 
   var people = [];
   var submitting = false;
+
+  // 추첨 대기 오버레이: 서버가 느릴 때(저사양) 지루하지 않도록 이름 룰렛과 안내 문구를 보여 준다
+  var DRAW_MESSAGES = [
+    '산타가 명단을 섞고 있어요',
+    '루돌프가 쪽지를 나르는 중이에요',
+    '자기 이름은 쏙 빼는 중이에요',
+    '선물 상자에 PIN을 포장하고 있어요',
+    '거의 다 됐어요! 두근두근'
+  ];
+  var DRAW_MIN_MS = 1500; // 응답이 빨라도 애니메이션이 깜빡이지 않도록 최소 표시 시간
+  var drawTimers = [];
+
+  function showDrawOverlay(names) {
+    var overlay = $('drawOverlay'), nameEl = $('drawName'), msgEl = $('drawMessage');
+    var nameIndex = 0, msgIndex = 0;
+    msgEl.textContent = DRAW_MESSAGES[0];
+    nameEl.textContent = names[0];
+    overlay.hidden = false;
+    document.body.classList.add('no-scroll');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      nameEl.textContent = '?'; // 동작 줄이기 사용자: 빠르게 바뀌는 이름 룰렛은 생략하고 안내 문구만 바꾼다
+    } else {
+      drawTimers.push(setInterval(function () {
+        nameIndex = (nameIndex + 1 + Math.floor(Math.random() * (names.length - 1))) % names.length;
+        nameEl.textContent = names[nameIndex];
+        Santa.restartAnim(nameEl, 'draw-tick');
+      }, 110));
+    }
+    drawTimers.push(setInterval(function () {
+      msgIndex = Math.min(msgIndex + 1, DRAW_MESSAGES.length - 1);
+      msgEl.textContent = DRAW_MESSAGES[msgIndex];
+      Santa.restartAnim(msgEl, 'rise-quick');
+    }, 1400));
+  }
+
+  function hideDrawOverlay() {
+    drawTimers.forEach(clearInterval);
+    drawTimers = [];
+    $('drawOverlay').hidden = true;
+    document.body.classList.remove('no-scroll');
+  }
 
   var $ = function (id) { return document.getElementById(id); };
   var form = $('createForm'), nameEl = $('evName'), memoEl = $('evMemo'), personEl = $('evPerson');
@@ -199,8 +267,14 @@
     submitting = true;
     showErr($('submitErr'), '');
     render();
+    showDrawOverlay(body.participants);
+    var drawStartedAt = Date.now();
+    var waitMinimum = function (value) {
+      var remaining = DRAW_MIN_MS - (Date.now() - drawStartedAt);
+      return new Promise(function (resolve) { setTimeout(function () { resolve(value); }, Math.max(0, remaining)); });
+    };
 
-    Santa.api('POST', '/events', body).then(function (res) {
+    Santa.api('POST', '/events', body).then(waitMinimum).then(function (res) {
       var created = {
         eventName: Santa.pick(res, 'name', 'eventName') || body.name,
         publicCode: Santa.pick(res, 'publicCode', 'code'),
@@ -215,6 +289,7 @@
         location.href = '/admin/' + encodeURIComponent(created.adminToken);
       }
     }).catch(function (err) {
+      hideDrawOverlay();
       submitting = false;
       showErr($('submitErr'), err.message);
       render();
