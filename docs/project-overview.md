@@ -180,5 +180,5 @@ participants
 
 ## 기술 스택
 
-Spring Boot 4.1.2 · Java 17 · Spring Data JPA + QueryDSL · MySQL · Spring Security · springdoc
+Spring Boot 4.1.2 · Java 17 · Spring Data JPA + QueryDSL · PostgreSQL(Supabase) · Spring Security · springdoc · Render 배포
 화면은 정적 HTML/JS(`src/main/resources/static`)입니다. 자세한 내용은 [CLAUDE.md](../CLAUDE.md)를 참고하세요.

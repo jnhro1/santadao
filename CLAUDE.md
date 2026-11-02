@@ -3,16 +3,18 @@
 로그인 없이 쓰는 크리스마스 마니또 랜덤 추첨 웹 앱. 요구사항과 미결정 사항은 `docs/project-overview.md`를 참고합니다.
 
 Spring Boot 4.1.2 · Java 17 · Spring Data JPA (Hibernate 7) + QueryDSL (OpenFeign 7.x) · Spring Security · springdoc · Gradle
-DB: MySQL — 프로필별 스키마 `santadao-local`(local, 기본) / `santadao-test`(test) / `santadao`(prod)
+DB: PostgreSQL. 테이블은 모든 환경에서 `santadao` 스키마(Supabase 공개 API 노출 방지). database는 `santadao_local`(local, 기본, Docker) / `santadao_test`(test, Docker) / `postgres`(prod, Supabase)
+배포: 앱은 Render(Docker, `render.yaml`), DB는 Supabase. 절차는 `docs/deploy.md`
 설정: `src/main/resources/application.yml`(공통 DB 설정) + `application-{local,test,prod}.yml`(DB URL, 로그). `./gradlew test`는 자동으로 test 프로필
-설정 원칙: 민감하지 않은 환경별 값(스키마명, 로그)은 `application-{profile}.yml`에 직접 적습니다. 민감하거나 서버마다 다른 값(`DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`)은 yml에 값·기본값 없이 참조만 하고, 모든 환경에서 같은 변수명을 씁니다(환경 접미사 금지)
-값 주입: 로컬은 프로젝트 루트의 `application-secret.yml`(gitignore, 예시 `.example`), 서버(staging/prod)는 그 환경의 값을 환경변수로 넣습니다. 새 환경은 `application-{env}.yml` + 해당 서버 환경변수만 추가합니다
-스키마: Flyway(`src/main/resources/db/migration`)만 관리하고 `ddl-auto`는 모든 프로필 `validate`. 엔티티 변경 시 `V{n}__설명.sql`을 함께 추가하고, 적용된 파일은 수정하지 않습니다. FK는 만들지 않고, 모든 테이블·컬럼에 한글 COMMENT(DDL)와 `comment` 속성(엔티티)을 답니다. 새 환경 최초 세팅은 `docker/mysql/init.sql`
+설정 원칙: 민감하지 않은 환경별 값(database명, 로그)은 `application-{profile}.yml`에 직접 적습니다. 민감하거나 서버마다 다른 값(`DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`)은 yml에 값·기본값 없이 참조만 하고, 모든 환경에서 같은 변수명을 씁니다(환경 접미사 금지)
+값 주입: 로컬은 프로젝트 루트의 `application-secret.yml`(gitignore, 예시 `.example`), 서버(Render)는 그 환경의 값을 환경변수로 넣습니다. 새 환경은 `application-{env}.yml` + 해당 서버 환경변수만 추가합니다
+스키마: Flyway(`src/main/resources/db/migration`)만 관리하고 `ddl-auto`는 모든 프로필 `validate`. 엔티티 변경 시 `V{n}__설명.sql`을 함께 추가하고, 적용된 파일은 수정하지 않습니다. FK는 만들지 않고, 모든 테이블·컬럼에 한글 COMMENT(DDL)와 `comment` 속성(엔티티)을 달고, 모든 테이블에 RLS를 켭니다
 패키지 루트: `com.jnhro1.santadao`
 
 ## Commands
 
 ```bash
+docker compose up -d                              # 로컬 Postgres (최초 1회 .env.example → .env 복사)
 ./gradlew build                                   # 컴파일 + 테스트
 ./gradlew test --tests "com.jnhro1.santadao.album.*"   # 특정 테스트
 ./gradlew bootRun                                 # local 프로필, Swagger: /swagger-ui.html

@@ -16,8 +16,8 @@ paths:
 
 ## 테스트 환경
 
-- `./gradlew test`는 `test` 프로필로 실행되며 MySQL `santadao-test` 스키마를 사용합니다. MySQL이 떠 있어야 합니다.
-- 테스트 컨텍스트가 뜰 때마다 `TestFlywayConfig`가 `santadao-test`를 비우고(clean) V1부터 다시 마이그레이션합니다. 이전 실행의 데이터가 남지 않으며, 마이그레이션이 빈 DB에서 처음부터 적용되는지도 함께 검증됩니다.
+- `./gradlew test`는 `test` 프로필로 실행되며 로컬 Postgres의 `santadao_test` database(`santadao` 스키마)를 사용합니다. 먼저 `docker compose up -d`로 Postgres를 띄워야 합니다.
+- 테스트 컨텍스트가 뜰 때마다 `TestFlywayConfig`가 `santadao` 스키마를 비우고(clean) V1부터 다시 마이그레이션합니다. 이전 실행의 데이터가 남지 않으며, 마이그레이션이 빈 DB에서 처음부터 적용되는지도 함께 검증됩니다.
 - `@DataJpaTest`도 임베디드 DB로 교체하지 않고 같은 스키마를 사용합니다 (`spring.test.database.replace: none`).
 - test 프로필 설정은 `src/main/resources/application-test.yml`에 있습니다. DB 계정은 local과 같이 `application-secret.yml`에서 읽습니다.
 

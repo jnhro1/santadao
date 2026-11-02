@@ -35,7 +35,7 @@ argument-hint: "<도메인명> [필드 설명]"
 | 4 | Service | `{domain}/service/{Domain}Service.java` |
 | 5 | Controller | `{domain}/controller/{Domain}Controller.java` |
 | 6 | ErrorCode 항목 | `global/exception/ErrorCode.java`에 `{DOMAIN}_NOT_FOUND` 추가 |
-| 7 | 마이그레이션 | `src/main/resources/db/migration/V{다음 번호}__create_{domains}.sql` (FK 없이, 모든 테이블·컬럼에 한글 COMMENT, `.claude/rules/jpa.md` 7절 규칙). 엔티티에도 같은 문구로 `comment` 속성을 답니다 |
+| 7 | 마이그레이션 | `src/main/resources/db/migration/V{다음 번호}__create_{domains}.sql` (Postgres 문법, FK 없이, 모든 테이블·컬럼에 한글 COMMENT, RLS 활성화, `.claude/rules/jpa.md` 7절 규칙). 엔티티에도 같은 문구로 `comment` 속성을 답니다 |
 | 8 | 테스트 | Entity 단위 테스트, Service 테스트, (커스텀 쿼리가 있으면) `@DataJpaTest` |
 
 요청받지 않은 API/필드는 만들지 않습니다.
