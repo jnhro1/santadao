@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>산타다오 · 추첨 완료</title>
+<meta name="theme-color" content="#1E4B3B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
+<link rel="stylesheet" href="/css/santadao.css">
+</head>
+<body class="bg-green">
+<div class="wrap stack">
+
+  <header class="header">
+    <a class="logo" href="/">
+      <span class="logo-badge red">
+        <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 22 C8 12 13 6 20 6 C25 6 27 10 26 15 L22 12 C19 12 15 15 13 22 Z" fill="#FFF8EE"/><rect x="4" y="20" width="20" height="6" rx="3" fill="#E8B04B"/><circle cx="26" cy="15" r="3.5" fill="#E8B04B"/></svg>
+      </span>
+      <span class="logo-text">산타다오</span>
+    </a>
+  </header>
+
+  <!-- 생성 정보 없음 (새로고침/직접 접속) -->
+  <section class="card on-green" id="emptyView" hidden style="margin-top:40px;align-items:center;text-align:center;gap:14px">
+    <h1 class="card-title" style="font-size:24px">생성 정보가 없어요</h1>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#5A463B">이 화면은 이벤트를 만든 직후에만 볼 수 있어요.<br>PIN은 관리 링크에서 다시 볼 수 있어요.</p>
+    <a class="btn btn-pine btn-md" href="/">새 마니또 만들기</a>
+  </section>
+
+  <div id="mainView" class="stack" hidden>
+    <section class="center-hero">
+      <svg class="deco twinkle" style="left:54px;top:18px" width="14" height="14" viewBox="0 0 24 24" fill="#E8B04B" aria-hidden="true"><path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
+      <svg class="deco twinkle d2" style="right:58px;top:40px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFF8EE" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7"/></svg>
+      <svg class="deco twinkle d3" style="right:92px;top:4px" width="10" height="10" viewBox="0 0 24 24" fill="#E8B04B" aria-hidden="true"><path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
+      <div class="check-badge pop">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1E4B3B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+      </div>
+      <h1 class="title-lg" style="font-size:32px;margin-top:6px">추첨 완료!</h1>
+      <p style="margin:0;font-size:15px;line-height:1.55;color:#D6E6DD"><b style="color:#FFF8EE" id="eventName"></b><br><span id="countText"></span>명의 마니또가 몰래 정해졌어요</p>
+      <p class="soft-pill">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.9 17.9A10 10 0 0 1 2 12s3.5-7 10-7a9.7 9.7 0 0 1 5.9 2M22 12s-1 2-3 4M3 3l18 18"/></svg>
+        결과는 주최자에게도 보이지 않아요
+      </p>
+    </section>
+
+    <section class="card on-green">
+      <div class="card-head">
+        <span class="card-icon red">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFF8EE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>
+        </span>
+        <div><h2 class="card-title">공용 링크</h2><span class="card-sub">단톡방에 공유하세요</span></div>
+      </div>
+      <div class="link-row">
+        <code class="link-box" id="publicUrl"></code>
+        <button class="copy-btn red" type="button" id="copyPublic">복사</button>
+      </div>
+    </section>
+
+    <section class="card on-green">
+      <div class="card-head">
+        <span class="card-icon pine">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B04B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3M16 7l3 3M18 5l2 2"/></svg>
+        </span>
+        <div><h2 class="card-title">관리 링크</h2><span class="card-sub">나만 보관하세요 · PIN을 다시 볼 수 있어요</span></div>
+      </div>
+      <div class="link-row">
+        <code class="link-box" id="adminUrl"></code>
+        <button class="copy-btn pine" type="button" id="copyAdmin">복사</button>
+      </div>
+      <p class="notice-warn">
+        <svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2L12 3zM12 10v5M12 18h.01"/></svg>
+        이 링크가 퍼지면 모든 PIN이 보여요. 단톡방에는 올리지 마세요.
+      </p>
+    </section>
+
+    <section class="card on-green" style="gap:14px">
+      <div class="card-head">
+        <span class="card-icon gold">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B2A10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        </span>
+        <div><h2 class="card-title">참가자별 PIN</h2><span class="card-sub">각자에게 개인 메시지로 보내 주세요</span></div>
+      </div>
+      <ul class="pin-list" id="pinList"></ul>
+      <button class="btn btn-outline" type="button" id="copyAll">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+        PIN 목록 전체 복사
+      </button>
+    </section>
+
+    <div style="margin:4px 16px 0">
+      <a class="btn btn-red btn-md" id="previewLink" href="#">
+        참가자 화면 열기
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var data = null;
+  try { data = JSON.parse(sessionStorage.getItem('santadao:created') || 'null'); } catch (e) { data = null; }
+
+  if (!data || !data.publicCode) {
+    $('emptyView').hidden = false;
+    return;
+  }
+  $('mainView').hidden = false;
+
+  var origin = location.origin;
+  var publicUrl = origin + '/e/' + data.publicCode;
+  var adminUrl = origin + '/admin/' + data.adminToken;
+  var people = data.participants || [];
+
+  document.title = '산타다오 · ' + data.eventName + ' 추첨 완료';
+  $('eventName').textContent = data.eventName;
+  $('countText').textContent = people.length;
+  $('publicUrl').textContent = publicUrl.replace(/^https?:\/\//, '');
+  $('publicUrl').title = publicUrl;
+  $('adminUrl').textContent = adminUrl.replace(/^https?:\/\//, '');
+  $('adminUrl').title = adminUrl;
+  $('previewLink').href = publicUrl;
+
+  $('copyPublic').addEventListener('click', function () {
+    Santa.copyWithToast(publicUrl, '공용 링크를 복사했어요', this, '복사됨');
+  });
+  $('copyAdmin').addEventListener('click', function () {
+    Santa.copyWithToast(adminUrl, '관리 링크를 복사했어요', this, '복사됨');
+  });
+
+  var COPY_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>';
+  var CHECK_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E6B53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+  // 개인 메시지로 보내기 좋은 문구
+  function personalMessage(p) {
+    return '[' + data.eventName + '] ' + p.name + '님의 마니또 PIN은 ' + p.pin + ' 이에요.\n' + publicUrl + ' 에서 이름을 고르고 PIN을 입력하세요!';
+  }
+
+  var list = $('pinList');
+  people.forEach(function (p) {
+    var li = document.createElement('li');
+    li.className = 'pin-row';
+
+    var name = document.createElement('span');
+    name.className = 'pin-name';
+    name.textContent = p.name;
+
+    var right = document.createElement('div');
+    right.className = 'pin-right';
+    var tiles = document.createElement('span');
+    tiles.className = 'pin-tiles';
+    tiles.setAttribute('aria-label', p.name + ' PIN ' + String(p.pin).split('').join(' '));
+    String(p.pin).split('').forEach(function (d) {
+      var t = document.createElement('span');
+      t.className = 'pin-tile';
+      t.setAttribute('aria-hidden', 'true');
+      t.textContent = d;
+      tiles.appendChild(t);
+    });
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'icon-btn';
+    btn.setAttribute('aria-label', p.name + '에게 보낼 메시지 복사');
+    btn.innerHTML = COPY_SVG;
+    btn.addEventListener('click', function () {
+      Santa.copyText(personalMessage(p)).then(function () {
+        Santa.toast(p.name + '에게 보낼 메시지를 복사했어요');
+        btn.innerHTML = CHECK_SVG;
+        setTimeout(function () { btn.innerHTML = COPY_SVG; }, 1500);
+      }, function () { Santa.toast('복사하지 못했어요'); });
+    });
+
+    right.appendChild(tiles);
+    right.appendChild(btn);
+    li.appendChild(name);
+    li.appendChild(right);
+    list.appendChild(li);
+  });
+
+  $('copyAll').addEventListener('click', function () {
+    var text = '[' + data.eventName + '] 마니또 PIN 목록\n' +
+      people.map(function (p) { return p.name + ': ' + p.pin; }).join('\n');
+    Santa.copyWithToast(text, 'PIN 목록을 복사했어요');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>산타다오 · 크리스마스 마니또 만들기</title>
+<meta name="description" content="로그인 없이 바로 뽑는 연말 크리스마스 마니또">
+<meta name="theme-color" content="#B8282F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
+<link rel="stylesheet" href="/css/santadao.css">
+</head>
+<body class="bg-red">
+<div class="wrap">
+
+  <header class="header">
+    <a class="logo" href="/">
+      <span class="logo-badge">
+        <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 22 C8 12 13 6 20 6 C25 6 27 10 26 15 L22 12 C19 12 15 15 13 22 Z" fill="#E0464E"/><rect x="4" y="20" width="20" height="6" rx="3" fill="#FFF8EE"/><circle cx="26" cy="15" r="3.5" fill="#FFF8EE"/></svg>
+      </span>
+      <span class="logo-text">산타다오</span>
+    </a>
+    <span class="pill-outline">로그인 없이 바로</span>
+  </header>
+
+  <section class="hero">
+    <svg class="deco twinkle" style="left:50%;top:26px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFF8EE" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7"/></svg>
+    <svg class="deco twinkle d2" style="right:30px;top:18px" width="12" height="12" viewBox="0 0 24 24" fill="#E8B04B" aria-hidden="true"><path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/></svg>
+    <svg class="deco twinkle d3" style="left:30px;top:12px" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFF8EE" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7"/></svg>
+    <div class="hero-text">
+      <p class="eyebrow" id="eyebrow">연말 마니또</p>
+      <h1 class="title-xl">두근 두근<br>나의 마니또는?</h1>
+      <p class="lead">이름만 적으면 바로 추첨!<br>각자 PIN으로 몰래 확인해요.</p>
+    </div>
+    <svg class="bob" width="112" height="112" viewBox="0 0 132 132" aria-hidden="true">
+      <rect x="18" y="58" width="96" height="66" rx="10" fill="#1E4B3B"/>
+      <circle cx="36" cy="80" r="3" fill="#FFF8EE" opacity=".7"/><circle cx="96" cy="100" r="3" fill="#FFF8EE" opacity=".7"/><circle cx="40" cy="108" r="2.5" fill="#FFF8EE" opacity=".7"/><circle cx="94" cy="74" r="2.5" fill="#FFF8EE" opacity=".7"/>
+      <rect x="12" y="42" width="108" height="22" rx="7" fill="#2E6B53"/>
+      <rect x="58" y="42" width="16" height="82" fill="#E8B04B"/>
+      <path d="M66 42 C50 18 28 22 38 36 C43 43 56 43 66 42 Z" fill="#E8B04B"/>
+      <path d="M66 42 C82 18 104 22 94 36 C89 43 76 43 66 42 Z" fill="#E8B04B"/>
+      <circle cx="66" cy="42" r="7" fill="#C98F27"/>
+    </svg>
+  </section>
+
+  <form class="card garland-top" id="createForm" novalidate>
+    <svg class="garland" viewBox="0 0 340 30" aria-hidden="true">
+      <path d="M0 4 Q42 22 85 4 T170 4 T255 4 T340 4" stroke="#1E4B3B" stroke-width="1.6" fill="none"/>
+      <circle cx="21" cy="15" r="3.5" fill="#E8B04B"/><circle cx="42" cy="19" r="5" fill="#B8282F"/><circle cx="64" cy="15" r="3.5" fill="#2E6B53"/>
+      <circle cx="106" cy="15" r="3.5" fill="#E8B04B"/><circle cx="127" cy="19" r="5" fill="#2E6B53"/><circle cx="149" cy="15" r="3.5" fill="#B8282F"/>
+      <circle cx="191" cy="15" r="3.5" fill="#E8B04B"/><circle cx="212" cy="19" r="5" fill="#B8282F"/><circle cx="234" cy="15" r="3.5" fill="#2E6B53"/>
+      <circle cx="276" cy="15" r="3.5" fill="#E8B04B"/><circle cx="297" cy="19" r="5" fill="#2E6B53"/><circle cx="319" cy="15" r="3.5" fill="#B8282F"/>
+    </svg>
+
+    <div class="field-group">
+      <div class="label-row">
+        <label class="label" for="evName">이벤트 이름 <span class="req">*</span></label>
+        <span class="counter"><span id="nameLen">0</span> / 30</span>
+      </div>
+      <input class="input" id="evName" type="text" maxlength="30" autocomplete="off" placeholder="예: 우리팀 연말 마니또" required>
+    </div>
+
+    <div class="field-group">
+      <div class="label-row">
+        <label class="label" for="evMemo">메모 <span class="opt">선택</span></label>
+        <span class="counter"><span id="memoLen">0</span> / 200</span>
+      </div>
+      <textarea class="textarea" id="evMemo" maxlength="200" placeholder="선물 금액, 공개 날짜 등을 적어 주세요"></textarea>
+    </div>
+
+    <div class="field-group" style="gap:10px">
+      <div class="label-row">
+        <label class="label" for="evPerson">참가자 <span class="req">*</span></label>
+        <span class="counter"><b id="count">0</b> / 20명 · 최소 3명</span>
+      </div>
+      <div class="row">
+        <input class="input" id="evPerson" type="text" maxlength="10" autocomplete="off" placeholder="이름 (10자까지)" enterkeyhint="done">
+        <button class="btn btn-pine btn-sm" type="button" id="addBtn">추가</button>
+      </div>
+      <p class="msg-error" id="personErr" role="alert" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 17h.01"/></svg>
+        <span></span>
+      </p>
+      <ul class="chips" id="chips" aria-label="참가자 목록"></ul>
+    </div>
+
+    <p class="notice-dashed">
+      <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8282F" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+      <span>만들기를 누르면 <b>바로 추첨</b>되고 다시 뽑을 수 없어요. 자기 자신은 절대 안 뽑혀요!</span>
+    </p>
+
+    <p class="msg-error center" id="submitErr" role="alert" hidden>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 17h.01"/></svg>
+      <span></span>
+    </p>
+
+    <button class="btn btn-pine" type="submit" id="submitBtn" disabled>참가자를 3명 이상 넣어 주세요</button>
+  </form>
+
+  <section class="steps-sec">
+    <h2 class="steps-title">이렇게 진행돼요</h2>
+    <ol class="steps">
+      <li><span class="step-num">1</span>이름을 적고 만들면 즉시 추첨</li>
+      <li><span class="step-num">2</span>링크는 단톡방에, PIN은 개인 메시지로</li>
+      <li><span class="step-num">3</span>각자 이름 + PIN으로 몰래 확인</li>
+    </ol>
+  </section>
+</div>
+
+<script src="/js/common.js"></script>
+<script>
+(function () {
+  'use strict';
+  var MIN = 3, MAX = 20, NAME_MAX = 10;
+  var GIFT_ICON = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8B04B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M2 9h20M12 9v12M12 9C9 3 5 5 7.5 8M12 9c3-6 7-4 4.5-1"/></svg>';
+
+  var people = [];
+  var submitting = false;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $('createForm'), nameEl = $('evName'), memoEl = $('evMemo'), personEl = $('evPerson');
+  var chips = $('chips'), submitBtn = $('submitBtn');
+
+  $('eyebrow').textContent = new Date().getFullYear() + ' 연말 마니또';
+
+  function norm(s) { return s.trim().toLowerCase(); }
+
+  function showErr(el, msg) {
+    el.querySelector('span').textContent = msg;
+    el.hidden = !msg;
+  }
+
+  function addPerson() {
+    var v = personEl.value.trim();
+    if (!v) return showErr($('personErr'), '이름을 입력해 주세요');
+    if (v.length > NAME_MAX) return showErr($('personErr'), '이름은 ' + NAME_MAX + '자까지 쓸 수 있어요');
+    if (people.length >= MAX) return showErr($('personErr'), '참가자는 최대 ' + MAX + '명이에요');
+    var dup = people.filter(function (p) { return norm(p) === norm(v); })[0];
+    if (dup) return showErr($('personErr'), '‘' + dup + '’ 이름이 이미 있어요. 구분되게 다시 적어 주세요');
+    people.push(v);
+    personEl.value = '';
+    showErr($('personErr'), '');
+    render();
+    personEl.focus();
+  }
+
+  function removePerson(i) {
+    people.splice(i, 1);
+    render();
+  }
+
+  function render() {
+    chips.textContent = '';
+    people.forEach(function (p, i) {
+      var li = document.createElement('li');
+      li.className = 'chip';
+      li.appendChild(document.createTextNode(p));
+      var x = document.createElement('button');
+      x.type = 'button';
+      x.className = 'chip-x';
+      x.setAttribute('aria-label', p + ' 삭제');
+      x.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+      x.addEventListener('click', function () { removePerson(i); });
+      li.appendChild(x);
+      chips.appendChild(li);
+    });
+    $('count').textContent = people.length;
+    $('nameLen').textContent = nameEl.value.length;
+    $('memoLen').textContent = memoEl.value.length;
+
+    var ready = people.length >= MIN && nameEl.value.trim().length > 0 && !submitting;
+    submitBtn.disabled = !ready;
+    if (submitting) submitBtn.textContent = '추첨하는 중…';
+    else if (people.length < MIN) submitBtn.textContent = '참가자를 ' + MIN + '명 이상 넣어 주세요';
+    else if (!nameEl.value.trim()) submitBtn.textContent = '이벤트 이름을 적어 주세요';
+    else submitBtn.innerHTML = GIFT_ICON + '마니또 뽑기';
+  }
+
+  $('addBtn').addEventListener('click', addPerson);
+  personEl.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); addPerson(); }
+  });
+  personEl.addEventListener('input', function () { showErr($('personErr'), ''); });
+  nameEl.addEventListener('input', render);
+  memoEl.addEventListener('input', render);
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (submitBtn.disabled) return;
+    // 입력칸에 남아 있는 이름이 있으면 먼저 추가
+    if (personEl.value.trim()) { addPerson(); if (!$('personErr').hidden) return; }
+
+    var body = {
+      name: nameEl.value.trim(),
+      memo: memoEl.value.trim() || null,
+      participants: people.slice()
+    };
+    submitting = true;
+    showErr($('submitErr'), '');
+    render();
+
+    Santa.api('POST', '/events', body).then(function (res) {
+      var created = {
+        eventName: Santa.pick(res, 'name', 'eventName') || body.name,
+        publicCode: Santa.pick(res, 'publicCode', 'code'),
+        adminToken: Santa.pick(res, 'adminToken', 'token'),
+        participants: Santa.normalizeParticipants(Santa.pick(res, 'participants', 'pins'))
+      };
+      try {
+        sessionStorage.setItem('santadao:created', JSON.stringify(created));
+        location.href = '/created.html';
+      } catch (err) {
+        // 브라우저 저장소를 못 쓰면 관리 화면으로 바로 이동 (PIN 목록 확인 가능)
+        location.href = '/admin/' + encodeURIComponent(created.adminToken);
+      }
+    }).catch(function (err) {
+      submitting = false;
+      showErr($('submitErr'), err.message);
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

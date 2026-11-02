@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>산타다오 · 주최자 관리</title>
+<meta name="theme-color" content="#1E4B3B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
+<link rel="stylesheet" href="/css/santadao.css">
+</head>
+<body class="bg-cream">
+<div class="wrap stack">
+
+  <header class="admin-head">
+    <div class="header">
+      <a class="logo" href="/">
+        <span class="logo-badge red">
+          <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 22 C8 12 13 6 20 6 C25 6 27 10 26 15 L22 12 C19 12 15 15 13 22 Z" fill="#FFF8EE"/><rect x="4" y="20" width="20" height="6" rx="3" fill="#E8B04B"/><circle cx="26" cy="15" r="3.5" fill="#E8B04B"/></svg>
+        </span>
+        <span class="logo-text">산타다오</span>
+      </a>
+      <span class="pill-gold">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3M16 7l3 3"/></svg>
+        주최자 전용
+      </span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <h1 class="title-lg" style="font-size:28px" id="eventName">&nbsp;</h1>
+      <p style="margin:0;font-size:14px;color:#D6E6DD" id="metaText">&nbsp;</p>
+    </div>
+  </header>
+
+  <div class="loading" id="loadingView"><div class="spinner" style="border-color:rgba(30,75,59,.2);border-top-color:#1E4B3B" role="status" aria-label="불러오는 중"></div></div>
+
+  <section class="card on-cream" id="errorView" hidden style="align-items:center;text-align:center;gap:14px">
+    <h2 class="card-title" style="font-size:22px" id="errorTitle">관리 페이지를 찾을 수 없어요</h2>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#5A463B" id="errorText">관리 링크 주소를 다시 확인해 주세요.</p>
+    <a class="btn btn-pine btn-md" href="/">새 마니또 만들기</a>
+  </section>
+
+  <div class="stack" id="mainView" hidden>
+    <p class="notice-dashed white" style="margin:0 16px">
+      <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E4B3B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.9 17.9A10 10 0 0 1 2 12s3.5-7 10-7a9.7 9.7 0 0 1 5.9 2M22 12s-1 2-3 4M3 3l18 18"/></svg>
+      <span>여기에는 <b>PIN만</b> 있어요. 누가 누구의 마니또인지는 주최자도 볼 수 없어요. PIN을 잊은 친구에게 다시 알려 주세요.</span>
+    </p>
+
+    <section class="card on-cream">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <h2 class="card-title" style="font-size:20px">참가자별 PIN</h2>
+        <span class="card-sub" id="countText"></span>
+      </div>
+      <ul class="pin-list" id="pinList"></ul>
+      <button class="btn btn-pine btn-md" type="button" id="copyAll" style="margin-top:4px;font-size:17px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B04B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+        PIN 목록 전체 복사
+      </button>
+    </section>
+
+    <section class="card on-cream" id="publicSection" hidden style="box-shadow:none;gap:10px">
+      <h2 class="card-title" style="font-size:17px">참가자에게 보낼 공용 링크</h2>
+      <div class="link-row">
+        <code class="link-box" id="publicUrl"></code>
+        <button class="copy-btn red" type="button" id="copyPublic">복사</button>
+      </div>
+    </section>
+
+    <p class="notice-warn" style="margin:0 16px;background:transparent;padding:0">
+      <svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2L12 3zM12 10v5M12 18h.01"/></svg>
+      이 페이지 주소는 나만 보관하세요. 다시 추첨하려면 새 이벤트를 만들어야 해요.
+    </p>
+    <div style="margin:0 16px"><a class="btn btn-outline" href="/">새 마니또 만들기</a></div>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var token = Santa.codeFromPath('admin');
+  var DOT_COLORS = ['#B8282F', '#2E6B53', '#E8B04B'];
+  var COPY_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>';
+  var CHECK_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E6B53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+  function fail(title, text) {
+    $('loadingView').hidden = true;
+    $('errorTitle').textContent = title;
+    $('errorText').textContent = text;
+    $('eventName').textContent = '관리 페이지';
+    $('metaText').textContent = '';
+    $('errorView').hidden = false;
+  }
+
+  if (!token) { fail('관리 페이지를 찾을 수 없어요', '관리 링크 주소를 다시 확인해 주세요.'); return; }
+
+  Santa.api('GET', '/admin/events/' + encodeURIComponent(token)).then(function (res) {
+    var name = Santa.pick(res, 'name', 'eventName') || '';
+    var people = Santa.normalizeParticipants(Santa.pick(res, 'participants', 'pins'));
+    var publicCode = Santa.pick(res, 'publicCode', 'code');
+    var createdAt = Santa.pick(res, 'createdAt');
+
+    document.title = '산타다오 · ' + name + ' 관리';
+    $('eventName').textContent = name;
+    var meta = '참가자 ' + people.length + '명';
+    if (createdAt) {
+      var d = new Date(createdAt);
+      if (!isNaN(d)) meta += ' · ' + d.getFullYear() + '년 ' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일 추첨 완료';
+    }
+    $('metaText').textContent = meta;
+    $('countText').textContent = people.length + '명';
+
+    var list = $('pinList');
+    people.forEach(function (p, i) {
+      var li = document.createElement('li');
+      li.className = 'pin-row';
+
+      var left = document.createElement('span');
+      left.className = 'pin-name';
+      var dot = document.createElement('span');
+      dot.className = 'pin-dot';
+      dot.style.background = DOT_COLORS[i % DOT_COLORS.length];
+      dot.setAttribute('aria-hidden', 'true');
+      left.appendChild(dot);
+      left.appendChild(document.createTextNode(p.name));
+
+      var right = document.createElement('div');
+      right.className = 'pin-right';
+      var pin = document.createElement('span');
+      pin.className = 'pin-text';
+      pin.textContent = p.pin;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'icon-btn';
+      btn.setAttribute('aria-label', p.name + ' PIN 복사');
+      btn.innerHTML = COPY_SVG;
+      btn.addEventListener('click', function () {
+        Santa.copyText(String(p.pin)).then(function () {
+          Santa.toast(p.name + '의 PIN을 복사했어요');
+          btn.innerHTML = CHECK_SVG;
+          setTimeout(function () { btn.innerHTML = COPY_SVG; }, 1500);
+        }, function () { Santa.toast('복사하지 못했어요'); });
+      });
+      right.appendChild(pin);
+      right.appendChild(btn);
+
+      li.appendChild(left);
+      li.appendChild(right);
+      list.appendChild(li);
+    });
+
+    $('copyAll').addEventListener('click', function () {
+      var text = '[' + name + '] 마니또 PIN 목록\n' + people.map(function (p) { return p.name + ': ' + p.pin; }).join('\n');
+      Santa.copyWithToast(text, 'PIN 목록을 복사했어요');
+    });
+
+    if (publicCode) {
+      var url = location.origin + '/e/' + publicCode;
+      $('publicUrl').textContent = url.replace(/^https?:\/\//, '');
+      $('publicUrl').title = url;
+      $('copyPublic').addEventListener('click', function () {
+        Santa.copyWithToast(url, '공용 링크를 복사했어요', this, '복사됨');
+      });
+      $('publicSection').hidden = false;
+    }
+
+    $('loadingView').hidden = true;
+    $('mainView').hidden = false;
+  }).catch(function (err) {
+    if (err.status === 404) fail('관리 페이지를 찾을 수 없어요', '관리 링크 주소를 다시 확인해 주세요.');
+    else fail('잠시 문제가 생겼어요', '정보를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.');
+  });
+})();
+</script>
+</body>
+</html>
