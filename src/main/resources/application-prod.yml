@@ -5,6 +5,11 @@ spring:
   datasource:
     # Supabase: 기본 database(postgres)의 santadao 스키마. 접속은 Session pooler(5432) 사용
     url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/postgres?sslmode=require
+  flyway:
+    # Render 무료 플랜(저사양 CPU)에서는 기동 직후 첫 SSL 핸드셰이크가 느려 pooler가 연결을 끊을 수 있다.
+    # 재시도 시에는 SSL 초기화가 끝나 있어 빠르게 연결된다.
+    connect-retries: 5
+    connect-retries-interval: 5s
   jpa:
     hibernate:
       ddl-auto: validate   # 스키마는 Flyway가 관리한다
